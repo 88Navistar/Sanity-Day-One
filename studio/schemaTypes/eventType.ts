@@ -1,5 +1,6 @@
 import {defineField, defineType} from 'sanity'
 import {CalendarIcon} from '@sanity/icons'
+import { DoorsOpenInput } from './components/DoorsOpenInput'
 export const eventType = defineType({
   name: 'event',
   title: 'Event',
@@ -24,6 +25,17 @@ export const eventType = defineType({
     .required()
     .error(`Required to generate a page on the website`),
     hidden: ({document}) => !document?.name,
+    readOnly: ({value, currentUser}) => {
+      // Anyone can set the initial slug
+      if (!value) {
+        return false
+      }
+  
+      const isAdmin = currentUser?.roles.some((role) => role.name === 'administrator')
+  
+      // Only admins can change the slug
+      return !isAdmin
+    },
 
     }),
     defineField({
@@ -33,6 +45,7 @@ export const eventType = defineType({
         list: ['in-person', 'virtual'],
         layout: 'radio',
       },
+      group: 'details',
     }),    
     defineField({
       name: 'date',
@@ -42,7 +55,11 @@ export const eventType = defineType({
       name: 'doorsOpen',
       description: 'Number of minutes before the start time for admission',
       type: 'number',
-      initialValue: 60
+      initialValue: 60,
+      group: 'details',
+      components: {
+        input: DoorsOpenInput,
+      },
     }),
     defineField({
       name: 'venue',

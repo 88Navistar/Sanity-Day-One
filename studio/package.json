@@ -20,11 +20,13 @@
   "dependencies": {
     "@sanity/client": "^7.6.0",
     "@sanity/icons": "^3.7.4",
+    "@sanity/ui": "^2.16.7",
     "@sanity/vision": "^3.99.0",
     "react": "^19.1",
     "react-dom": "^19.1",
     "sanity": "^3.99.0",
     "sanity-plugin-documents-pane": "^2.4.1",
+    "sanity-plugin-media": "^3.0.4",
     "styled-components": "^6.1.18"
   },
   "devDependencies": {
